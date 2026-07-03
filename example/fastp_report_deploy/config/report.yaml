@@ -1,0 +1,35 @@
+project:
+  ID: KM-XS-2508-005
+  name: 广东省农科院香芽蕉时空转录组研究
+  description: 本项目旨在通过时空转录组测序，解析香芽蕉在不同生长阶段和组织中的基因表达动态变化，揭示其生长发育和抗逆机制，为香芽蕉的育种和栽培提供分子基础
+  author: 康美华大生信部
+  date: 2026-01-08
+
+input:
+  fastp_json_dir: Input/fastp_json
+
+output:
+  html: Output/html/fastp_qc_summary.html
+  pdf: Output/pdf/fastp_qc_summary.pdf
+
+# ===== 新增：PDF页眉页脚配置 =====
+pdf_header_footer:
+  # 页眉配置
+  header:
+    enabled: true
+    logo: assets/images/logo.png  # 页眉左侧图片
+    right_text: "康美华大测序数据质控报告 | 项目编号: KM-XS-2508-005"  # 页眉右侧文案
+    logo_height: "25px"  # 图片高度
+    
+  # 页脚配置
+  footer:
+    enabled: true
+    text: "康美华大基因技术有限公司 | https://www.kmhdgene.com"  # 页脚文案
+    show_page_numbers: true  # 显示页码
+    
+  # 边距调整（为页眉页脚留空间）
+  margins:
+    top: "25mm"   # 增加顶部边距为页眉
+    bottom: "20mm" # 增加底部边距为页脚
+    left: "10mm"
+    right: "10mm"

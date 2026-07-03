@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>康美华大测序数据质控报告</title>
+  <link rel="icon" href="../../assets/images/KMHD_logo_circle.png" type="image/png">
+  <link rel="stylesheet" href="../../assets/css/mystyle.css">
+</head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const links = document.querySelectorAll(".sidebar-menu a");
+      const sections = [...links].map(a =>
+        document.querySelector(a.getAttribute("href"))
+      );
+
+      window.addEventListener("scroll", () => {
+        let current = null;
+
+        sections.forEach(section => {
+          if (section && section.getBoundingClientRect().top <= 120) {
+            current = section;
+          }
+        });
+
+        links.forEach(a => a.classList.remove("active"));
+
+        if (current) {
+          const activeLink = document.querySelector(
+            `.sidebar-menu a[href="#${current.id}"]`
+          );
+          if (activeLink) activeLink.classList.add("active");
+        }
+      });
+    });
+  </script>
+
+
+<body>
+
+<div class="layout">
+
+  <!-- 左侧目录 -->
+  <nav class="sidebar">
+    <!-- logo 区域 -->
+  <div class="sidebar-logo">
+    <a href="#project-info" title="返回项目信息">
+      <img src="../../assets/images/logo.png" alt="Project Logo">
+    </a>
+  </div>
+
+    <!-- 分割线：logo与目录分隔 -->
+    <div class="sidebar-divider"></div>
+
+        <ul class="sidebar-menu">
+      <li>
+        <a href="#project-info"  title="项目信息">
+          1. 项目信息
+        </a>
+        <a href="#qc-summary"  title="测序数据质量统计">
+          2. 测序数据质量统计
+        </a>
+        <a href="#read1-qc" title="Read1 碱基质量分布">
+          3. Read1 碱基质量分布
+        </a>
+        <a href="#read2-qc" title="Read2 碱基质量分布">
+          4. Read2 碱基质量分布
+        </a>
+        <a href="#read1-content" title="Read1 碱基含量分布">
+          5. Read1 碱基含量分布
+        </a>
+        <a href="#read2-content" title="Read2 碱基含量分布">
+          6. Read2 碱基含量分布
+        </a>
+        <a href="#methods" title="方法学">
+          7. 分析软件与方法学
+        </a>
+        <a href="#sequencing-basics" title="测序数据基础知识">
+          8. 报告解读与交付说明
+        </a>
+
+      </li>
+    </ul>
+  </nav>
+
+<main class="content">
+
+<!-- 模块 0：项目信息（进入 PDF 目录） -->
+<!-- ========================= -->
+<section id="project-info" class="report-section page-break-after">
+  <h1 class="section-title">1. 项目信息</h1>
+
+<div class="project-info">
+  <p>
+    <span class="label">项目编号 </span>
+    <span class="colon">:</span>
+    <span class="value">KM-XS-2508-005</span>
+  </p>
+  <p>
+    <span class="label">项目名称 </span>
+    <span class="colon">:</span>
+    <span class="value">广东省农科院香芽蕉时空转录组研究</span>
+  </p>
+  <p>
+    <span class="label">项目描述 </span>
+    <span class="colon">:</span>
+    <span class="value">本项目旨在通过时空转录组测序，解析香芽蕉在不同生长阶段和组织中的基因表达动态变化，揭示其生长发育和抗逆机制，为香芽蕉的育种和栽培提供分子基础</span>
+  </p>
+  <p>
+    <span class="label">负责人 </span>
+    <span class="colon">:</span>
+    <span class="value">康美华大生信部</span>
+  </p>
+  <p>
+    <span class="label">日期 </span>
+    <span class="colon">:</span>
+    <span class="value">2026-01-08</span>
+  </p>
+</div>
+</section>
+
+
+  <!-- 模块 1：测序数据质量统计 -->
+<section id="qc-summary" class="report-section">
+  <!-- 一级标题：章节标题，进入 PDF 目录 -->
+  <h1 class="section-title">
+    2. 测序数据质量统计
+  </h1>
+
+  <!-- 表格模块（正文，不进 PDF 目录） -->
+  <div class="table-wrapper">
+
+    <!-- 表标题：居中于表 -->
+    <div class="table-title">
+      表1 测序数据质量统计
+    </div>
+
+    <table border="1" class="dataframe mystyle">
+  <thead>
+    <tr style="text-align: right;">
+      <th>sample</th>
+      <th>total_reads</th>
+      <th>total_bases</th>
+      <th>q20_bases</th>
+      <th>q30_bases</th>
+      <th>q20_rate (%)</th>
+      <th>q30_rate (%)</th>
+      <th>read1_mean_length</th>
+      <th>read2_mean_length</th>
+      <th>gc_content (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A05861G2_fastp</td>
+      <td>6,799,594</td>
+      <td>458,972,595</td>
+      <td>453,759,975</td>
+      <td>448,248,117</td>
+      <td>98.86</td>
+      <td>97.66</td>
+      <td>35</td>
+      <td>100</td>
+      <td>46.61</td>
+    </tr>
+    <tr>
+      <td>C06020E4_fastp</td>
+      <td>7,968,466</td>
+      <td>537,871,455</td>
+      <td>531,449,516</td>
+      <td>524,827,712</td>
+      <td>98.81</td>
+      <td>97.57</td>
+      <td>35</td>
+      <td>100</td>
+      <td>46.06</td>
+    </tr>
+    <tr>
+      <td>C06022E4_fastp</td>
+      <td>5,869,812</td>
+      <td>396,212,310</td>
+      <td>389,974,531</td>
+      <td>383,474,440</td>
+      <td>98.43</td>
+      <td>96.79</td>
+      <td>35</td>
+      <td>100</td>
+      <td>47.40</td>
+    </tr>
+    <tr>
+      <td>C06023G4_fastp</td>
+      <td>5,200,694</td>
+      <td>351,046,845</td>
+      <td>347,094,481</td>
+      <td>342,996,886</td>
+      <td>98.87</td>
+      <td>97.71</td>
+      <td>35</td>
+      <td>100</td>
+      <td>47.08</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="table-note">
+  <p><strong>说明：</strong></p>
+  <ul>
+    <li><strong>sample</strong>：样本编号。</li>
+    <li><strong>total_reads</strong>：该样本获得的原始测序 reads 总数。</li>
+    <li><strong>total_bases</strong>：原始测序数据中碱基的总数。</li>
+    <li><strong>q20_bases</strong>：质量值不低于 Q20 的碱基总数。</li>
+    <li><strong>q30_bases</strong>：质量值不低于 Q30 的碱基总数。</li>
+    <li><strong>q20_rate (%)</strong>：Q20 碱基占总碱基数的比例。</li>
+    <li><strong>q30_rate (%)</strong>：Q30 碱基占总碱基数的比例。</li>
+    <li><strong>read1_mean_length</strong>：Read 1 的平均读长。</li>
+    <li><strong>read2_mean_length</strong>：Read 2 的平均读长。</li>
+    <li><strong>gc_content (%)</strong>：测序数据中 G 和 C 碱基的比例。</li>
+  </ul>
+</div>
+  </div>
+</section>
+
+<!-- 模块 2：Read1 碱基质量分布 -->
+<section id="read1-qc" class="report-section page-break-after">
+  <h1 class="section-title">
+    3. Read1 碱基质量分布
+  </h1>
+
+  <div class="qc-image-grid">
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_quality_curves/A05861G2_fastp_read1_quality.png" alt="A05861G2_fastp Read1 quality">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_quality_curves/C06020E4_fastp_read1_quality.png" alt="C06020E4_fastp Read1 quality">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_quality_curves/C06022E4_fastp_read1_quality.png" alt="C06022E4_fastp Read1 quality">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_quality_curves/C06023G4_fastp_read1_quality.png" alt="C06023G4_fastp Read1 quality">
+      </div>
+    
+  </div>
+  <div class="figure-note">
+    <p><strong>说明：</strong></p>
+    <ul>
+      <li>本图展示了各样本 <strong>Read1</strong> 在不同测序循环（Position）上的碱基质量变化情况。</li>
+      <li>横坐标表示测序循环位置（cycle），纵坐标表示对应位置的平均碱基质量值（Phred score）。</li>
+      <li>不同颜色的曲线分别代表碱基 <strong>A、T、C、G</strong> 在各位置的质量分布情况。</li>
+      <li><strong>Mean</strong> 曲线表示该位置所有碱基的平均质量水平，用于整体评估测序质量稳定性。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 模块 3：Read2 碱基质量分布 -->
+<section id="read2-qc" class="report-section page-break-after">
+  <h1 class="section-title">
+    4. Read2 碱基质量分布
+  </h1>
+
+  <div class="qc-image-grid">
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_quality_curves/A05861G2_fastp_read2_quality.png" alt="A05861G2_fastp Read2 quality">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_quality_curves/C06020E4_fastp_read2_quality.png" alt="C06020E4_fastp Read2 quality">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_quality_curves/C06022E4_fastp_read2_quality.png" alt="C06022E4_fastp Read2 quality">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_quality_curves/C06023G4_fastp_read2_quality.png" alt="C06023G4_fastp Read2 quality">
+      </div>
+    
+  </div>
+  <div class="figure-note">
+    <p><strong>说明：</strong></p>
+    <ul>
+      <li>本图展示了各样本 <strong>Read2</strong> 在不同测序循环（Position）上的碱基质量变化情况。</li>
+      <li>横坐标表示测序循环位置（cycle），纵坐标表示对应位置的平均碱基质量值（Phred score）。</li>
+      <li>不同颜色的曲线分别代表碱基 <strong>A、T、C、G</strong> 在各位置的质量分布情况。</li>
+      <li><strong>Mean</strong> 曲线表示该位置所有碱基的平均质量水平，用于整体评估测序质量稳定性。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 模块 4：Read1 碱基含量分布 -->
+<section id="read1-content" class="report-section page-break-after">
+  <h1 class="section-title">
+    5. Read1 碱基含量分布
+  </h1>
+
+  <div class="qc-image-grid">
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_content_curves/A05861G2_fastp_read1_content.png" alt="A05861G2_fastp Read1 base content">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_content_curves/C06020E4_fastp_read1_content.png" alt="C06020E4_fastp Read1 base content">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_content_curves/C06022E4_fastp_read1_content.png" alt="C06022E4_fastp Read1 base content">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read1_content_curves/C06023G4_fastp_read1_content.png" alt="C06023G4_fastp Read1 base content">
+      </div>
+    
+  </div>
+  <div class="figure-note">
+    <p><strong>说明：</strong></p>
+    <ul>
+      <li>本图展示了各样本 <strong>Read1</strong> 在不同测序循环（Position）上的碱基含量分布情况。</li>
+      <li>上图显示 <strong>A、T、C、G、N</strong> 碱基在不同位置的相对含量，其中N表示未知碱基。</li>
+      <li>下图显示 <strong>GC含量</strong> 在不同位置的变化，红色虚线表示平均GC含量，灰色区域表示GC含量变化范围。</li>
+      <li>图例中标注了各碱基的平均含量百分比（A/T/C/G/N），便于快速评估样本碱基组成。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 模块 5：Read2 碱基含量分布 -->
+<section id="read2-content" class="report-section page-break-after">
+  <h1 class="section-title">
+    6. Read2 碱基含量分布
+  </h1>
+
+  <div class="qc-image-grid">
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_content_curves/A05861G2_fastp_read2_content.png" alt="A05861G2_fastp Read2 base content">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_content_curves/C06020E4_fastp_read2_content.png" alt="C06020E4_fastp Read2 base content">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_content_curves/C06022E4_fastp_read2_content.png" alt="C06022E4_fastp Read2 base content">
+      </div>
+    
+      <div class="qc-image-item">
+        <img src="../../Output/read2_content_curves/C06023G4_fastp_read2_content.png" alt="C06023G4_fastp Read2 base content">
+      </div>
+    
+  </div>
+  <div class="figure-note">
+    <p><strong>说明：</strong></p>
+    <ul>
+      <li>本图展示了各样本 <strong>Read2</strong> 在不同测序循环（Position）上的碱基含量分布情况。</li>
+      <li>上图显示 <strong>A、T、C、G、N</strong> 碱基在不同位置的相对含量，其中N表示未知碱基。</li>
+      <li>下图显示 <strong>GC含量</strong> 在不同位置的变化，红色虚线表示平均GC含量，灰色区域表示GC含量变化范围。</li>
+      <li>图例中标注了各碱基的平均含量百分比（A/T/C/G/N），便于快速评估样本碱基组成。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 模块 6：方法学 -->
+<section id="methods" class="report-section">
+  <h1 class="section-title">
+    7. 分析软件与方法学
+  </h1>
+
+  <div class="methods-content">
+    <h2>7.1 Fastp 软件简介</h2>
+    <p>
+      <strong>fastp</strong> 是一款超快速的一体化FASTQ数据质量控制与预处理工具，专为高通量测序数据设计。该软件具有以下主要特点：
+    </p>
+    <ul>
+      <li><strong>超高速处理</strong>：利用多线程技术，处理速度比传统QC工具快数倍</li>
+      <li><strong>全面质量控制</strong>：提供丰富的QC指标，包括碱基质量、含量、接头污染、重复序列等</li>
+      <li><strong>一体化功能</strong>：整合了质量控制、过滤、裁剪、校正等多个预处理步骤</li>
+      <li><strong>用户友好</strong>：支持HTML/JSON格式报告，便于数据可视化和后续分析</li>
+    </ul>
+
+    <h2>7.2 分析流程概述</h2>
+      <p>本报告采用标准化的生物信息学分析流程，具体包括以下关键步骤：</p>
+      <ol>
+        <li><strong>数据质控分析</strong>：利用fastp软件进行高通量测序数据的全面质量评估</li>
+        <li><strong>结果数据提取</strong>：从结构化输出中解析关键质量评估指标</li>
+        <li><strong>可视化呈现</strong>：通过专业数据可视化工具生成多维度的质量分析图表</li>
+        <li><strong>报告整合</strong>：采用自动化报告生成系统整合分析结果</li>
+        <li><strong>格式标准化</strong>：输出符合学术规范的多格式报告文档</li>
+      </ol>
+
+    <h2>7.3 命令与参数</h2>
+    <p>本报告使用的核心分析命令如下：</p>
+    
+    <div class="code-block">
+      <pre><code>fastp -i R1.fq.gz -I R2.fq.gz -o /dev/null -O /tmp/null.fastq -h fastp.html -j fastp.json -R "fastp report" -A -G -Q -L -w 4</code></pre>
+    </div>
+
+    <p>关键参数说明：</p>
+    <table class="params-table">
+      <thead>
+        <tr>
+          <th>参数</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>-i, -I</code></td>
+          <td>输入文件：Read1和Read2的FASTQ.gz文件</td>
+        </tr>
+        <tr>
+          <td><code>-o, -O</code></td>
+          <td>输出文件：过滤后的FASTQ文件</td>
+        </tr>
+        <tr>
+          <td><code>-h, -j</code></td>
+          <td>输出HTML和JSON格式的报告文件</td>
+        </tr>
+        <tr>
+          <td><code>-R</code></td>
+          <td>报告标题</td>
+        </tr>
+        <tr>
+          <td><code>-A</code></td>
+          <td>禁用接头检测（当数据已去除接头时使用）</td>
+        </tr>
+        <tr>
+          <td><code>-G</code></td>
+          <td>禁用polyG尾修剪（适用于非NovaSeq数据）</td>
+        </tr>
+        <tr>
+          <td><code>-Q</code></td>
+          <td>禁用质量过滤（仅进行质量评估）</td>
+        </tr>
+        <tr>
+          <td><code>-L</code></td>
+          <td>禁用长度过滤</td>
+        </tr>
+        <tr>
+          <td><code>-w</code></td>
+          <td>工作线程数</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>7.4 参考文献</h2>
+    <div class="references">
+      <p>1. <strong>fastp 软件</strong></p>
+      <p>项目地址：<a href="https://github.com/OpenGene/fastp" target="_blank">https://github.com/OpenGene/fastp</a></p>
+      <p>使用版本：v1.0.1</p>
+      
+      <p>2. <strong>学术引用</strong></p>
+      <p class="citation">
+        Chen S. fastp 1.0: An ultra-fast all-round tool for FASTQ data quality control and preprocessing. 
+        <em>Imeta</em>. 2025 Sep 9;4(5):e70078.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 模块 8：测序数据基础知识 -->
+<section id="sequencing-basics" class="report-section">
+  <h1 class="section-title">
+    8. 报告解读与交付说明
+  </h1>
+
+  <div class="basics-content">
+    <h2>8.1 FASTQ 文件格式</h2>
+    
+    <p>
+      FASTQ格式是目前高通量测序数据存储的<strong>标准格式</strong>，它包含了测序序列及其对应的质量信息。
+      每个测序读段（read）由4行组成：
+    </p>
+    
+    <div class="code-block">
+      <pre><code>@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345 length=36
+GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACC
++
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9IC</code></pre>
+    </div>
+    
+  <!-- 图8.1：FASTQ结构图 - 使用HTML/CSS -->
+<div class="fastq-structure">
+  <div class="fastq-line" style="border-left-color: #1f77b4;">
+    <div class="line-number">1</div>
+    <div class="line-content">
+      <span class="line-prefix">@</span>
+      <span class="line-desc">序列标识符 (Read ID)</span>
+    </div>
+    <div class="line-explanation">
+      以'@'开头，包含测序仪器、运行信息、坐标等元数据<br>
+      示例: <code>@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345</code>
+    </div>
+  </div>
+  
+  <div class="fastq-line" style="border-left-color: #2ca02c;">
+    <div class="line-number">2</div>
+    <div class="line-content">
+      <span class="line-sequence">GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACC</span>
+    </div>
+    <div class="line-explanation">
+      碱基序列（A/T/C/G/N），N表示无法确定的碱基<br>
+      长度通常为50-300bp，取决于测序平台和设置
+    </div>
+  </div>
+  
+  <div class="fastq-line" style="border-left-color: #ff7f0e;">
+    <div class="line-number">3</div>
+    <div class="line-content">
+      <span class="line-prefix">+</span>
+      <span class="line-desc">分隔符 (可选ID)</span>
+    </div>
+    <div class="line-explanation">
+      通常为'+'，可选跟随序列标识符<br>
+      主要用于分隔序列行和质量行
+    </div>
+  </div>
+  
+  <div class="fastq-line" style="border-left-color: #d62728;">
+    <div class="line-number">4</div>
+    <div class="line-content">
+      <span class="line-quality">IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9IC</span>
+    </div>
+    <div class="line-explanation">
+      质量分数行，每个字符对应一个碱基的质量<br>
+      使用ASCII编码，字符值越高表示质量越好
+    </div>
+  </div>
+  
+  <div class="fastq-legend">
+    <div class="legend-item">
+      <span class="legend-color" style="background-color: #1f77b4;"></span>
+      <span>序列标识符行</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-color" style="background-color: #2ca02c;"></span>
+      <span>碱基序列行</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-color" style="background-color: #ff7f0e;"></span>
+      <span>分隔符行</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-color" style="background-color: #d62728;"></span>
+      <span>质量分数行</span>
+    </div>
+  </div>
+  
+  <!-- 标题放在图表内容之后 -->
+  <div class="figure-caption">图8.1 FASTQ文件四行结构示意图</div>
+</div>
+    
+    <table class="basics-table">
+      <thead>
+        <tr>
+          <th>行号</th>
+          <th>内容</th>
+          <th>说明</th>
+          <th>示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>序列标识符</td>
+          <td>以'@'开头，包含测序仪器、运行信息、坐标等元数据</td>
+          <td><code>@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345</code></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>测序序列</td>
+          <td>碱基序列（A/T/C/G/N），N表示无法确定</td>
+          <td><code>GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACC</code></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>分隔符</td>
+          <td>通常为'+'，可选跟随序列标识符</td>
+          <td><code>+</code> 或 <code>+SRR001666.1</code></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>质量分数</td>
+          <td>每个碱基对应的Phred质量分数（ASCII编码）</td>
+          <td><code>IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9IC</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>8.2 Phred 质量分数系统</h2>
+    
+    <h3>8.2.1 质量分数定义</h3>
+    <p>
+      Phred质量分数（Q score）是测序数据质量评估的<strong>核心指标</strong>，它表示碱基识别错误概率的对数值：
+    </p>
+    
+    <div class="formula">
+      Q = -10 × log<sub>10</sub>(P<sub>e</sub>)
+    </div>
+    
+    <p>其中：</p>
+    <ul>
+      <li><strong>Q</strong>: Phred质量分数</li>
+      <li><strong>P<sub>e</sub></strong>: 碱基识别错误概率</li>
+    </ul>
+    
+    <!-- 图8.2：Phred质量分数图表 - 修正版 -->
+<div class="phred-chart">
+  <div class="chart-container">
+    <div class="chart-y-axis">
+      <div>错误率 (P<sub>e</sub>)</div>
+      <div class="y-scale">
+        <div>10%</div>
+        <div>1%</div>
+        <div>0.1%</div>
+        <div>0.01%</div>
+        <div>0.001%</div>
+        <div>0%</div>
+      </div>
+    </div>
+    
+    <div class="chart-bars">
+      <!-- 错误率越高柱子越高 -->
+      <div class="quality-bar" data-q="Q10" data-error="10%" data-accuracy="90%">
+        <div class="bar" style="height: 240px; background-color: #ff9999;">
+          <div class="bar-label">Q10</div>
+          <div class="bar-error">10% 错误率</div>
+        </div>
+      </div>
+      
+      <div class="quality-bar" data-q="Q20" data-error="1%" data-accuracy="99%">
+        <div class="bar" style="height: 190px; background-color: #ffcc99;">
+          <div class="bar-label">Q20</div>
+          <div class="bar-error">1% 错误率</div>
+        </div>
+      </div>
+      
+      <div class="quality-bar" data-q="Q30" data-error="0.1%" data-accuracy="99.9%">
+        <div class="bar" style="height: 150px; background-color: #ffff99;">
+          <div class="bar-label">Q30</div>
+          <div class="bar-error">0.1% 错误率</div>
+        </div>
+      </div>
+      
+      <div class="quality-bar" data-q="Q40" data-error="0.01%" data-accuracy="99.99%">
+        <div class="bar" style="height: 100px; background-color: #ccff99;">
+          <div class="bar-label">Q40</div>
+          <div class="bar-error">0.01% 错误率</div>
+        </div>
+      </div>
+      
+      <div class="quality-bar" data-q="Q50" data-error="0.001%" data-accuracy="99.999%">
+        <div class="bar" style="height: 55px; background-color: #99ff99;">
+          <div class="bar-label">Q50</div>
+          <div class="bar-error">0.001% 错误率</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+<div class="chart-legend">
+  <div class="legend-item">
+    <span class="legend-color" style="background-color: #ff9999;"></span>
+    <span>Q10: 10% 错误率 - 低质量</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-color" style="background-color: #ffcc99;"></span>
+    <span>Q20: 1% 错误率 - 基础标准</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-color" style="background-color: #ffff99;"></span>
+    <span>Q30: 0.1% 错误率 - 高质量</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-color" style="background-color: #ccff99;"></span>
+    <span>Q40: 0.01% 错误率 - 超高质量</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-color" style="background-color: #99ff99;"></span>
+    <span>Q50: 0.001% 错误率 - 极高质量</span>
+  </div>
+</div>
+  
+  <div class="figure-caption">图8.2 Phred质量分数与碱基识别错误率对应关系</div>
+</div>
+    
+    <h3>8.2.2 质量分数与错误率对照</h3>
+    <table class="quality-table">
+      <thead>
+        <tr>
+          <th>Phred质量分数 (Q)</th>
+          <th>错误概率 (P<sub>e</sub>)</th>
+          <th>正确率</th>
+          <th>应用场景</th>
+          <th>典型ASCII字符</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Q10</strong></td>
+          <td>1/10 = 10%</td>
+          <td>90%</td>
+          <td>低质量，通常被过滤</td>
+          <td><code>+</code> (43)</td>
+        </tr>
+        <tr>
+          <td><strong>Q20</strong></td>
+          <td>1/100 = 1%</td>
+          <td>99%</td>
+          <td>基础质量标准</td>
+          <td><code>5</code> (53)</td>
+        </tr>
+        <tr>
+          <td><strong>Q30</strong></td>
+          <td>1/1000 = 0.1%</td>
+          <td>99.9%</td>
+          <td>高质量标准</td>
+          <td><code>?</code> (63)</td>
+        </tr>
+        <tr>
+          <td><strong>Q40</strong></td>
+          <td>1/10000 = 0.01%</td>
+          <td>99.99%</td>
+          <td>超高质量测序</td>
+          <td><code>I</code> (73)</td>
+        </tr>
+        <tr>
+          <td><strong>Q50</strong></td>
+          <td>1/100000 = 0.001%</td>
+          <td>99.999%</td>
+          <td>极高质量测序</td>
+          <td><code>S</code> (83)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h3>8.2.3 ASCII 编码系统</h3>
+    <p>
+      在FASTQ文件中，质量分数使用<strong>ASCII字符编码</strong>存储，主要有两种编码体系：
+    </p>
+    
+    <table class="encoding-table">
+      <thead>
+        <tr>
+          <th>编码体系</th>
+          <th>ASCII范围</th>
+          <th>质量分数范围</th>
+          <th>偏移量</th>
+          <th>常用平台</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sanger / Illumina 1.8+</strong></td>
+          <td>33-126</td>
+          <td>0-93</td>
+          <td>+33</td>
+          <td>Illumina, Sanger</td>
+        </tr>
+        <tr>
+          <td><strong>Solexa / Illumina 1.3-1.7</strong></td>
+          <td>59-126</td>
+          <td>-5 to 62</td>
+          <td>+64</td>
+          <td>早期Illumina</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>转换公式：</p>
+    <div class="formula">
+      ASCII值 = Q + 偏移量
+    </div>
+    
+    <h2>8.3 文件交付说明</h2>
+
+<p>本分析项目生成的完整报告及相关文件将以标准格式交付，具体文件结构如下：</p>
+<h3 class="print-title" data-icon="📁">8.3.1 交付文件结构</h3>
+<div class="delivery-structure">
+  <div class="file-tree">
+    <div class="tree-item">
+      <span class="tree-icon">📁</span>
+      <span class="tree-name">report/</span>
+      <span class="tree-desc">报告主目录</span>
+    </div>
+    
+    <div class="tree-item tree-child">
+      <span class="tree-icon">📄</span>
+      <span class="tree-name">QC_report.html</span>
+      <span class="tree-desc">单文件HTML质量评估报告</span>
+    </div>
+    
+    <div class="tree-item tree-child">
+      <span class="tree-icon">📊</span>
+      <span class="tree-name">QC_report.pdf</span>
+      <span class="tree-desc">PDF格式质量评估报告</span>
+    </div>
+    
+    <div class="tree-item tree-child">
+      <span class="tree-icon">📁</span>
+      <span class="tree-name">rawData/</span>
+      <span class="tree-desc">原始数据目录（按需提供）</span>
+    </div>
+  </div>
+</div>
+
+<div class="file-descriptions">
+  <h3 class="print-title" data-icon="📋">8.3.2 文件详细说明</h3>
+  
+  <div class="description-item">
+    <p>1. QC_report.html</p>
+    <ul>
+      <li><strong>文件类型</strong>: 单文件HTML报告</li>
+      <li><strong>特点</strong>: 完全独立的HTML文件，包含所有样式、图片和数据，无需额外依赖</li>
+      <li><strong>打开方式</strong>: 可直接用任何现代网页浏览器打开（Chrome, Firefox, Edge, Safari等）</li>
+      <li><strong>优势</strong>: 
+        <ul>
+          <li>交互式浏览体验</li>
+          <li>支持章节导航</li>
+          <li>图像可缩放查看</li>
+          <li>支持打印为PDF格式</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="description-item">
+    <p>2. QC_report.pdf</p>
+    <ul>
+      <li><strong>文件类型</strong>: PDF格式报告</li>
+      <li><strong>特点</strong>: 专业排版的静态文档，适合打印和归档</li>
+      <li><strong>打开方式</strong>: Adobe Acrobat Reader, Preview (Mac), 或其他PDF阅读器</li>
+      <li><strong>优势</strong>: 
+        <ul>
+          <li>格式固定，跨平台显示一致</li>
+          <li>适合正式提交和打印</li>
+          <li>文件大小相对较小</li>
+          <li>便于长期存档</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="description-item">
+    <p>3. rawData/ 目录</p>
+    <ul>
+      <li><strong>目录类型</strong>: 原始数据存储目录</li>
+      <li><strong>内容说明</strong>: 根据项目需求，可能包含以下数据：</li>
+    </ul>
+    
+    <table class="rawdata-table">
+      <thead>
+        <tr>
+          <th>数据类型</th>
+          <th>格式</th>
+          <th>内容说明</th>
+          <th>用途</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>原始测序数据</td>
+          <td>FASTQ(.gz)</td>
+          <td>测序仪原始输出文件</td>
+          <td>原始数据备份，可用于重新分析</td>
+        </tr>
+        <tr>
+          <td>质量评估结果</td>
+          <td>JSON</td>
+          <td>fastp软件生成的详细质量评估数据</td>
+          <td>详细质量控制指标，可用于自定义分析</td>
+        </tr>
+        <tr>
+          <td>质量曲线图</td>
+          <td>PNG</td>
+          <td>碱基质量分布和含量分布可视化图</td>
+          <td>报告附图的高分辨率版本</td>
+        </tr>
+        <tr>
+          <td>分析中间文件</td>
+          <td>多样</td>
+          <td>分析过程中生成的中间结果文件</td>
+          <td>分析过程追溯和验证</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="usage-guidelines">
+  <h3 class="print-title" data-icon="💡">8.3.3 使用建议</h3>
+  
+  <div class="guidance-grid">
+    <div class="guidance-item">
+      <div class="guidance-icon">👥</div>
+      <div class="guidance-content">
+        <p>团队协作</p>
+        <p>建议使用<strong>QC_report.html</strong>进行内部讨论和审查，支持交互式浏览和细节查看。</p>
+      </div>
+    </div>
+    
+    <div class="guidance-item">
+      <div class="guidance-icon">📤</div>
+      <div class="guidance-content">
+        <p>正式提交</p>
+        <p>向期刊或机构正式提交时，建议使用<strong>QC_report.pdf</strong>，确保格式统一。</p>
+      </div>
+    </div>
+    
+    <div class="guidance-item">
+      <div class="guidance-icon">💾</div>
+      <div class="guidance-content">
+        <p>数据管理</p>
+        <p>建议将<strong>report/</strong>目录整体归档，确保所有相关文件集中管理。</p>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+</main>
+
+</div>
+
+</body>
+
+</html>
