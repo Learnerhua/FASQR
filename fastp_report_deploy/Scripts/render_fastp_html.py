@@ -58,6 +58,11 @@ def build_dataframe(json_dir):
             continue
 
         sample = os.path.splitext(fname)[0]
+        # Strip the trailing "_fastp" suffix produced by run.sh so the report's
+        # "sample" column shows the clean sample name (e.g. "sampleA") instead
+        # of the JSON filename stem (e.g. "sampleA_fastp").
+        if sample.endswith("_fastp"):
+            sample = sample[:-len("_fastp")]
         json_path = os.path.join(json_dir, fname)
 
         metrics = parse_fastp_json(json_path)
