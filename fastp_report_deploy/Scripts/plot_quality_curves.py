@@ -13,6 +13,11 @@ for filename in os.listdir(input_dir):
         continue
 
     sample_name = filename.replace(".json", "")
+    # Strip the trailing "_fastp" suffix produced by run.sh so plot titles
+    # (e.g. "sampleA Read1 Quality Curve") and PNG filenames
+    # (e.g. "sampleA_read1_quality.png") use the clean sample name.
+    if sample_name.endswith("_fastp"):
+        sample_name = sample_name[:-len("_fastp")]
     json_path = os.path.join(input_dir, filename)
 
     with open(json_path, "r") as f:
@@ -57,6 +62,11 @@ for filename in os.listdir(input_dir):
         continue
 
     sample_name = filename.replace(".json", "")
+    # Strip the trailing "_fastp" suffix produced by run.sh so plot titles
+    # (e.g. "sampleA Read1 Quality Curve") and PNG filenames
+    # (e.g. "sampleA_read1_quality.png") use the clean sample name.
+    if sample_name.endswith("_fastp"):
+        sample_name = sample_name[:-len("_fastp")]
     json_path = os.path.join(input_dir, filename)
 
     with open(json_path, "r") as f:
